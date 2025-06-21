@@ -1,0 +1,19 @@
+{
+    "name": "datahihi1/clean-talk",
+    "description": "A PHP library for managing, identifying and removing offensive words",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "CleanTalk\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "datahihi1",
+            "email": "datahihi1100@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0"
+    }
+}
