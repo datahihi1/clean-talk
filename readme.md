@@ -20,7 +20,7 @@ Có tham khảo từ dự án [vietnamese-offensive-words](https://github.com/bl
 
 ## Cài đặt
 
-Yêu cầu PHP >= 7.1, <= 8.4
+Yêu cầu PHP >= 7.1
 
 Cài đặt qua [Composer](https://getcomposer.org/):
 
