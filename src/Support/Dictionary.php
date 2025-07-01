@@ -33,7 +33,7 @@ class Dictionary
      */
     public function loadLocale($locale)
     {
-        $file = __DIR__ . "/../Locale/{$locale}.txt";
+        $file = __DIR__ . "/../locale/{$locale}.txt";
 
         if (file_exists($file)) {
             $this->words = array_filter(array_map('trim', file($file)));
