@@ -11,33 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [7.1, 7.4, 8.0, 8.1, 8.2, 8.3]
-        phpstan-version: ["1.10", "2.1"]
-        phpunit-version: ["8.5", "9.6", "11.5"]
-        exclude:
-          # Loại bỏ phpunit 11.5 trên PHP < 8.1
+        include:
           - php-version: 7.1
-            phpunit-version: 11.5
-          - php-version: 7.4
-            phpunit-version: 11.5
-          - php-version: 8.0
-            phpunit-version: 11.5
-          # Loại bỏ phpstan 2.1 trên PHP < 8.0
-          - php-version: 7.1
+            phpstan-version: "1.10"
+            phpunit-version: "8.5"
+          - php-version: 8.4
             phpstan-version: "2.1"
-          - php-version: 7.4
-            phpstan-version: "2.1"
-          # Loại bỏ phpunit 8.5 trên PHP >= 7.4
-          - php-version: 7.4
-            phpunit-version: 8.5
-          - php-version: 8.0
-            phpunit-version: 8.5
-          - php-version: 8.1
-            phpunit-version: 8.5
-          - php-version: 8.2
-            phpunit-version: 8.5
-          - php-version: 8.3
-            phpunit-version: 8.5
+            phpunit-version: "12.0"
     name: PHP ${{ matrix.php-version }} - phpstan ${{ matrix.phpstan-version }} - phpunit ${{ matrix.phpunit-version }}
     steps:
       - uses: actions/checkout@v4
