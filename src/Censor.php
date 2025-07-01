@@ -12,9 +12,18 @@ use CleanTalk\Support\Normalizer;
  * kiểm tra, làm sạch và thêm từ tục vào từ điển.
  */
 class Censor{
-    protected Dictionary $dictionary;
-    protected string $maskChar = '*';
-    protected bool $strict = false;
+    /**
+     * @var Dictionary
+     */
+    protected $dictionary;
+    /**
+     * @var string
+     */
+    protected $maskChar;
+    /**
+     * @var bool
+     */
+    protected $strict;
 
     /**
      * Censor là một lớp dùng để kiểm tra và làm sạch các từ tục trong văn bản.
@@ -24,22 +33,25 @@ class Censor{
      * Bạn có thể thay đổi ngôn ngữ từ điển bằng phương thức setLocale.
      * @param string $locale Tên ngôn ngữ theo tên file từ điển (ví dụ: 'vi', 'en', 'fr').
      */
-    public function __construct(string $locale = 'vi')
+    public function __construct($locale = 'vi')
     {
         $this->dictionary = new Dictionary($locale);
+        $this->maskChar = '*';
+        $this->strict = false;
     }
 
     /**
      * Kiểm tra nếu chuỗi chứa từ tục.
      * 
      * @param string $text Chuỗi cần kiểm tra
+     * @return bool
      */
-    public function contains(string $text): bool
+    public function contains($text)
     {
         $normalized = Normalizer::normalize($text, $this->strict);
 
         foreach ($this->dictionary->getWords() as $word) {
-            if (str_contains($normalized, $word)) {
+            if (strpos($normalized, $word) !== false) {
                 return true;
             }
         }
@@ -51,8 +63,9 @@ class Censor{
      * Làm sạch chuỗi: thay từ tục bằng dấu `*`
      * 
      * @param string $text Chuỗi cần làm sạch
+     * @return string
      */
-    public function clean(string $text): string
+    public function clean($text)
     {
         $normalized = Normalizer::normalize($text, $this->strict);
         $words = $this->dictionary->getWords();
@@ -74,7 +87,7 @@ class Censor{
      * 
      * @param string|array $word Từ tục hoặc mảng từ tục cần thêm
      */
-    public function addWord(string|array $word): void
+    public function addWord($word)
     {
         $this->dictionary->addWord($word);
     }
@@ -84,7 +97,7 @@ class Censor{
      * 
      * @param string $char Ký tự dùng để che các từ tục
      */
-    public function setMaskChar(string $char): void
+    public function setMaskChar($char)
     {
         $this->maskChar = $char;
     }
@@ -95,7 +108,7 @@ class Censor{
      * @param bool $strict Nếu true, sẽ loại bỏ ký tự đặc biệt và rút gọn ký tự lặp lại.
      *                    Nếu false, chỉ so sánh từ tục đã chuẩn hóa.
      */
-    public function setStrictMode(bool $strict): void
+    public function setStrictMode($strict)
     {
         $this->strict = $strict;
     }
@@ -106,7 +119,7 @@ class Censor{
      * @param string $locale Tên ngôn ngữ theo tên file từ điển (ví dụ: 'vi', 'en', 'fr')
      * @throws \RuntimeException Nếu không tìm thấy file từ điển tương ứng
      */
-    public function setLocale(string $locale): void
+    public function setLocale($locale)
     {
         $this->dictionary->loadLocale($locale);
     }
@@ -117,7 +130,7 @@ class Censor{
      * @param string $text Chuỗi cần kiểm tra
      * @return string
      */
-    public function null(string $text): string
+    public function null($text)
     {
         return $this->contains($text) ? '' : $text;
     }

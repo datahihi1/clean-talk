@@ -15,8 +15,9 @@ class Masker
      * 
      * @param string $word Từ cần che
      * @param string $maskChar Ký tự dùng để che (mặc định là '*')
+     * @return string
      */
-    public static function mask(string $word, string $maskChar = '*'): string
+    public static function mask($word, $maskChar = '*')
     {
         return str_repeat($maskChar, mb_strlen($word));
     }
@@ -28,8 +29,9 @@ class Masker
      * 
      * @param string $word Từ cần che
      * @param string $maskChar Ký tự dùng để che (mặc định là '*')
+     * @return string
      */
-    public static function smartMask(string $word, string $maskChar = '*'): string
+    public static function smartMask($word, $maskChar = '*')
     {
         $len = mb_strlen($word);
 

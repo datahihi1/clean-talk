@@ -20,18 +20,18 @@ Có tham khảo từ dự án [vietnamese-offensive-words](https://github.com/bl
 
 ## Cài đặt
 
-Yêu cầu PHP 8.0+
+Yêu cầu PHP >= 7.1, <= 8.4
 
-Cài đặt qua Composer:
+Cài đặt qua [Composer](https://getcomposer.org/):
 
 ```bash
 composer require datahihi1/clean-talk
 ```
 
-Sử dụng file loader.php (không cần Composer)
+Để phát triển, cài đặt thêm development dependencies:
 
-```php
-require_once './clean-talk/loader.php';
+```bash
+composer install --dev
 ```
 
 ## Sử dụng
@@ -39,7 +39,7 @@ require_once './clean-talk/loader.php';
 ```PHP
 // Khởi tạo đối tượng Censor với từ điển tiếng Việt
 use CleanTalk\Censor;
-$censor = new Censor('vi-vietnamese'); // vi-vietnamese là tên tệp từ điển tiếng Việt có trong `src/locale/`
+$censor = new Censor('vi'); // 'vi' là tên ngôn ngữ, sẽ tải file vi-vietnamese.txt
 
 // Bật chế độ strict mode nếu cần
 // Chế độ strict mode sẽ lọc các biến thể từ tục
@@ -62,5 +62,46 @@ $cleanedText = $censor->clean($text2);
 echo $cleanedText . PHP_EOL;  // Kết quả: 'Nhìn anh ấy kìa, anh ấy thật *** tính!'
 
 // Làm sạch văn bản với chế độ null
-$cleanedTextNull = $censor->null($text2); // Kết quả: ''
+$cleanedTextNull = $censor->null($text2); // Kết quả: '' (chuỗi rỗng vì có từ tục)
+print_utf8($cleanedTextNull);
+```
+
+## Demo
+
+Chạy file demo để xem ví dụ sử dụng:
+
+```bash
+php demo.php
+```
+
+## Testing
+
+Chạy tests (khi có):
+
+```bash
+./vendor/bin/phpunit
+```
+
+Chạy static analysis:
+
+```bash
+./vendor/bin/phpstan analyse src/
+```
+
+## Cấu trúc dự án
+
+```
+clean-talk/
+├── src/
+│   ├── Censor.php              # Class chính
+│   ├── Support/
+│   │   ├── Dictionary.php      # Quản lý từ điển
+│   │   ├── Masker.php          # Che từ tục
+│   │   └── Normalizer.php      # Chuẩn hóa văn bản
+│   └── locale/
+│       ├── vi-vietnamese.txt   # Từ điển tiếng Việt
+│       └── en-english.txt      # Từ điển tiếng Anh
+├── tests/                      # Unit tests
+├── composer.json
+└── readme.md
 ```

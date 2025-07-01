@@ -9,15 +9,19 @@ namespace CleanTalk\Support;
  */
 class Dictionary
 {
-    protected array $words = [];
+    /**
+     * @var array
+     */
+    protected $words;
 
     /**
      * Khởi tạo từ điển với ngôn ngữ mặc định.
      * Nếu cần, có thể tải từ điển khác bằng phương thức loadLocale.
      * @param string $locale
      */
-    public function __construct(string $locale = 'vi')
+    public function __construct($locale = 'vi')
     {
+        $this->words = array();
         $this->loadLocale($locale);
     }
     /**
@@ -27,7 +31,7 @@ class Dictionary
      * @param string $locale Tên ngôn ngữ (ví dụ: 'vi', 'en', 'fr')
      * @throws \RuntimeException
      */
-    public function loadLocale(string $locale): void
+    public function loadLocale($locale)
     {
         $file = __DIR__ . "/../Locale/{$locale}.txt";
 
@@ -44,7 +48,7 @@ class Dictionary
      * 
      * @param string|array $word Từ tục hoặc mảng từ tục cần thêm
      */
-    public function addWord(string|array $word): void
+    public function addWord($word)
     {
         if (is_array($word)) {
             foreach ($word as $w) {
@@ -59,7 +63,7 @@ class Dictionary
      * Lấy danh sách các từ tục trong từ điển.
      * @return array
      */
-    public function getWords(): array
+    public function getWords()
     {
         return $this->words;
     }
@@ -69,7 +73,7 @@ class Dictionary
      * @param array $words Danh sách từ tục, mỗi từ là một chuỗi
      * @return void
      */
-    public function setWords(array $words): void
+    public function setWords($words)
     {
         $this->words = array_map('strtolower', $words);
     }
